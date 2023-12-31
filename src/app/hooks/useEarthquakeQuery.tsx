@@ -7,7 +7,7 @@ export function useEarthquakeQuery() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude=6.0"
+          "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2023-01-02&minmagnitude=6.0"
         );
 
         const data = response.data;
