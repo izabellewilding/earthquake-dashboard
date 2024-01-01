@@ -4,6 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { convertEpochToMonthYear } from "../lib/ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
+import { groupChartData } from "../lib/GroupChartData";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,10 +14,9 @@ function Chart() {
   const filteredByMagnitude = data?.features
     .map((feature: any) => feature)
     .sort((a: any, b: any) => a.properties.time - b.properties.time)
-    .filter((item: any) => item.properties.mag > 4.0);
+    .filter((item: any) => item.properties.mag > 6.0);
 
   //   const dateOrdered = data?.sort((a: any, b: any) => console.warn(a, b));
-  console.warn(filteredByMagnitude);
 
   const labels = filteredByMagnitude?.map(
     (data: Earthquake) => data?.properties.time
@@ -32,14 +32,29 @@ function Chart() {
     }
   );
 
-  console.warn(filteredLabels, "LABELS");
+  const groupedChartData = groupChartData(filteredByMagnitude, filteredLabels);
+
+  console.warn(groupedChartData, "GPD");
 
   const chartData = {
-    labels: filteredLabels,
+    labels: groupedChartData?.map((data) => data.label),
     datasets: [
       {
-        data: filteredByMagnitude,
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        data: groupedChartData?.map((data) => data.value),
+        backgroundColor: [
+          "#af0026",
+          "#af1700",
+          "#eb7b36",
+          "#FFCE56",
+          "#00af17",
+          "#00600b",
+          "#002faf",
+          "#006faf",
+          "#57c1ff",
+          "#8b36eb",
+          "#9f9cfb",
+          "#ff56d8",
+        ],
         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
       },
     ],
