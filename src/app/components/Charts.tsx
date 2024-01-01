@@ -22,11 +22,11 @@ function Chart() {
     (data: Earthquake) => data?.properties.time
   );
 
-  const convertedLabels = labels.map((label: any) =>
+  const convertedLabels = labels?.map((label: any) =>
     convertEpochToMonthYear(label)
   );
 
-  const filteredLabels = convertedLabels.filter(
+  const filteredLabels = convertedLabels?.filter(
     (value: any, index: any, self: any) => {
       return self.indexOf(value) === index;
     }
