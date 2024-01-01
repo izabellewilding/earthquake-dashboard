@@ -1,4 +1,4 @@
-import { convertEpochToMonthYear } from "../lib/ConvertEpochToYearMonth";
+import { convertEpochToMonthYear } from "./ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
 
 interface GroupedChartData {

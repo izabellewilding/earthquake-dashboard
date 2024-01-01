@@ -7,18 +7,7 @@ type BarChartProps = {
   data: ChartData<"bar">;
 };
 
-export function BarChart({ data }: BarChartProps) {
-  const options = {
-    scales: {
-      x: {
-        beginAtZero: true,
-      },
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
+export function BarChart({ data, options }: BarChartProps) {
   return (
     <div>
       <Bar data={data} options={options} />
