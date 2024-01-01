@@ -24,6 +24,12 @@ const barOptions = {
       beginAtZero: true,
     },
   },
+  plugins: {
+    title: {
+      display: true,
+      text: "Number of Earthquakes with magnitude > 6.0 by month (2023)",
+    },
+  },
 };
 
 const doughtnutOptions = {
