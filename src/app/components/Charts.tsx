@@ -5,9 +5,19 @@ import { Doughnut } from "react-chartjs-2";
 import { convertEpochToMonthYear } from "../lib/ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
 import { groupChartData } from "../lib/GroupChartData";
+import { BarChart } from "./BarChart";
+import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 function Chart() {
   const { data, error, isLoading } = useEarthquakeQuery();
 
@@ -42,26 +52,36 @@ function Chart() {
       {
         data: groupedChartData?.map((data) => data.value),
         backgroundColor: [
-          "#af0026",
-          "#af1700",
-          "#eb7b36",
-          "#FFCE56",
-          "#00af17",
-          "#00600b",
-          "#002faf",
-          "#006faf",
-          "#57c1ff",
-          "#8b36eb",
-          "#9f9cfb",
-          "#ff56d8",
+          "#3498db", // Dodger Blue
+          "#2ecc71", // Emerald Green
+          "#9b59b6", // Amethyst Purple
+          "#1abc9c", // Turquoise
+          "#2980b9", // Belize Hole Blue
+          "#e74c3c", // Alizarin Red
+          "#d35400", // Pumpkin Orange (replaced)
+          "#e67e22", // Carrot Orange
+          "#c56cf0", // Soft Purple
+          "#fd79a8", // Light Pink
         ],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        hoverBackgroundColor: [
+          "#2980b9", // Shadow for Dodger Blue
+          "#27ae60", // Shadow for Emerald Green
+          "#8e44ad", // Shadow for Amethyst Purple
+          "#16a085", // Shadow for Turquoise
+          "#1f618d", // Shadow for Belize Hole Blue
+          "#c0392b", // Shadow for Alizarin Red
+          "#d35400", // Shadow for Carrot Orange
+          "#e67e22", // Shadow for Carrot Orange (replaced)
+          "#af7ac5", // Shadow for Soft Purple
+          "#e84393", // Shadow for Light Pink
+        ],
       },
     ],
   };
 
   const options = {
-    maintainAspectRatio: false, // To ensure the chart is a perfect circle
+    maintainAspectRatio: true, // To ensure the chart is a perfect circle
+    radius: 300,
     legend: {
       display: true,
       position: "right",
@@ -79,6 +99,7 @@ function Chart() {
   return (
     <div>
       <Doughnut data={chartData} options={options} />
+      <BarChart data={chartData} options={options} />
     </div>
   );
 }
