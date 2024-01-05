@@ -1,7 +1,7 @@
 import { useEarthquakeQuery } from "../hooks/useEarthquakeQuery";
 import { convertEpochToMonthYear } from "../utils/ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
-import { groupChartData } from "../utils/GroupChartData";
+import { groupMonthData } from "../utils/GroupChartData";
 
 export function groupedDataMonthMagnitude(): any {
   const { data, isLoading, isError } = useEarthquakeQuery();
@@ -25,7 +25,7 @@ export function groupedDataMonthMagnitude(): any {
     }
   );
 
-  const groupedChartData = groupChartData(filteredByMagnitude, filteredLabels);
+  const groupedChartData = groupMonthData(filteredByMagnitude, filteredLabels);
 
   return groupedChartData;
 }
