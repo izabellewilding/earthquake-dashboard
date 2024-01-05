@@ -4,7 +4,10 @@ import { Earthquake } from "../types/types";
 import { groupMonthData } from "../utils/GroupChartData";
 
 export function groupedDataMonthMagnitude(): any {
-  const { data, isLoading, isError } = useEarthquakeQuery();
+  const { data, isLoading, isError } = useEarthquakeQuery({
+    query:
+      "?format=geojson&starttime=2023-01-01&endtime=2023-12-31&minmagnitude=6.0",
+  });
 
   const filteredByMagnitude = data?.features
     .map((feature: any) => feature)

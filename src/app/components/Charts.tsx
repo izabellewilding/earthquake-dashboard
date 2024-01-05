@@ -4,6 +4,8 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 import { groupedDataMonthMagnitude } from "../api/groupedDataMonthMagnitude";
+import { getLatestEarthquake } from "../api/getLatestEarthquake";
+import { Card } from "./Card";
 
 ChartJS.register(
   ArcElement,
@@ -41,8 +43,10 @@ const doughtnutOptions = {
   },
 };
 
-function Chart() {
+function ChartsComponent() {
   const data = groupedDataMonthMagnitude();
+  const latestEarthquakeData = getLatestEarthquake();
+  const latestEarthquake = latestEarthquakeData?.properties;
 
   const chartData = {
     labels: data?.map((item: any) => item.label),
@@ -79,6 +83,7 @@ function Chart() {
 
   return (
     <div>
+      <Card latestEarthquake={latestEarthquake} />
       <DoughnutChart data={chartData} options={doughtnutOptions} />
       <BarChart data={chartData} options={barOptions} />
     </div>
@@ -88,7 +93,7 @@ function Chart() {
 export default function Charts() {
   return (
     <ErrorBoundary>
-      <Chart />
+      <ChartsComponent />
     </ErrorBoundary>
   );
 }
