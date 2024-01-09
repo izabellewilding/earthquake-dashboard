@@ -2,10 +2,11 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
+import { Card } from "./Card";
 import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 import { groupedDataMonthMagnitude } from "../api/groupedDataMonthMagnitude";
 import { getLatestEarthquake } from "../api/getLatestEarthquake";
-import { Card } from "./Card";
+import { getEarthquakesPerCountry } from "../api/getEarthquakesPerCountry";
 
 ChartJS.register(
   ArcElement,
@@ -36,7 +37,7 @@ const barOptions = {
 
 const doughtnutOptions = {
   maintainAspectRatio: true, // To ensure the chart is a perfect circle
-  radius: 300,
+  radius: 100,
   legend: {
     display: true,
     position: "right",
@@ -47,12 +48,13 @@ function ChartsComponent() {
   const data = groupedDataMonthMagnitude();
   const latestEarthquakeData = getLatestEarthquake();
   const latestEarthquake = latestEarthquakeData?.properties;
+  const earthquakesPerCountry = getEarthquakesPerCountry();
 
   const chartData = {
-    labels: data?.map((item: any) => item.label),
+    labels: earthquakesPerCountry?.map((item: any) => item.label),
     datasets: [
       {
-        data: data?.map((item: any) => item.value),
+        data: earthquakesPerCountry?.map((item: any) => item.value),
         backgroundColor: [
           "#3498db", // Dodger Blue
           "#2ecc71", // Emerald Green

@@ -1,3 +1,5 @@
+import { getLastWord } from "../utils/getLastWord";
+
 interface CardProps {
   latestEarthquake: {
     mag: number;
@@ -22,19 +24,6 @@ export function Card({ latestEarthquake, className }: CardProps) {
   const combinedClassName = `rounded-xl min-w-60 align-middle max-w-64 p-6 ${
     className || ""
   }`;
-
-  function getLastWord(inputString: string) {
-    // Trim the string to remove leading and trailing whitespaces
-    const trimmedString = inputString?.trim();
-
-    // Split the string into an array of words
-    const words = trimmedString?.split(/\s+/);
-
-    // Get the last word (if any)
-    const lastWord = words?.length > 0 ? words[words.length - 1] : "";
-
-    return lastWord;
-  }
 
   return (
     <div className={combinedClassName}>
