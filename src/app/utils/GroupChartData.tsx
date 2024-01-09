@@ -26,8 +26,8 @@ export function groupMonthData(
 
 export function groupBy(arr: any, key: any) {
   return arr.reduce((result: any, obj: any) => {
-    const label = obj.properties.place;
-
+    const label = getLastWord(obj.properties.place);
+    // console.warn("label", label);
     // If the key doesn't exist in the result, initialize an empty array
     if (!result[label]) {
       result[label] = [];
