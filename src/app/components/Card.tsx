@@ -4,6 +4,7 @@ interface CardProps {
     place: string;
     time: string;
   };
+  className?: string;
 }
 
 export function convertEpochToDate(epochTime: number) {
@@ -17,15 +18,32 @@ export function convertEpochToDate(epochTime: number) {
   return formattedDate;
 }
 
-export function Card({ latestEarthquake }: CardProps) {
-  console.warn(latestEarthquake);
-  return (
-    <div className="rounded-md bg-purple-500 align-middle max-w-64 p-6 ">
-      <p className="text-xs">Latest Earthquake</p>
+export function Card({ latestEarthquake, className }: CardProps) {
+  const combinedClassName = `rounded-xl min-w-60 align-middle max-w-64 p-6 ${
+    className || ""
+  }`;
 
-      <p className="text-sm">{latestEarthquake?.place}</p>
-      <p className="text-3xl">{latestEarthquake?.mag}</p>
-      <p className="text-md">{latestEarthquake?.time}</p>
+  function getLastWord(inputString: string) {
+    // Trim the string to remove leading and trailing whitespaces
+    const trimmedString = inputString?.trim();
+
+    // Split the string into an array of words
+    const words = trimmedString?.split(/\s+/);
+
+    // Get the last word (if any)
+    const lastWord = words?.length > 0 ? words[words.length - 1] : "";
+
+    return lastWord;
+  }
+
+  return (
+    <div className={combinedClassName}>
+      <p className="text-xs mb-3">Latest Earthquake</p>
+      <p className=" text-2xl font-bold mb-3">
+        {getLastWord(latestEarthquake?.place)}{" "}
+        <span className="text-xl font-semibold">{`(M${latestEarthquake?.mag})`}</span>
+      </p>
+      {/* <p className="text-md">{latestEarthquake?.time}</p> */}
     </div>
   );
 }

@@ -82,8 +82,12 @@ function ChartsComponent() {
   };
 
   return (
-    <div>
-      <Card latestEarthquake={latestEarthquake} />
+    <div className=" m-7">
+      <div className=" flex flex-row space-x-9 ml-9 ">
+        <Card className="bg-purple-500" latestEarthquake={latestEarthquake} />
+
+        <Card className="bg-cyan-400" latestEarthquake={latestEarthquake} />
+      </div>
       <DoughnutChart data={chartData} options={doughtnutOptions} />
       <BarChart data={chartData} options={barOptions} />
     </div>
