@@ -20,7 +20,7 @@ export function convertEpochToDate(epochTime: number) {
 export function Card({ latestEarthquake }: CardProps) {
   console.warn(latestEarthquake);
   return (
-    <div className="rounded-sm bg-purple-500 align-middle max-w-64">
+    <div className="rounded-md bg-purple-500 align-middle max-w-64 p-6 ">
       <p className="text-xs">Latest Earthquake</p>
 
       <p className="text-sm">{latestEarthquake?.place}</p>

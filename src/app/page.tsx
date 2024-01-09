@@ -2,6 +2,7 @@
 
 import { QueryClientProvider, QueryClient } from "react-query";
 import Charts from "./components/Charts";
+import { SideNavbar } from "./components/SideNavbar";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +12,9 @@ export default function Home() {
       <QueryClientProvider client={queryClient}>
         <main>
           <h1 className="">Dashboard</h1>
-          <Charts />
+          <SideNavbar>
+            <Charts />
+          </SideNavbar>
         </main>
       </QueryClientProvider>
     </>
