@@ -4,6 +4,8 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
 import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
+import { useQuery } from "react-query";
+import axios from "axios";
 import { groupedDataMonthMagnitude } from "../api/groupedDataMonthMagnitude";
 import { getLatestEarthquake } from "../api/getLatestEarthquake";
 import { getEarthquakesPerCountry } from "../api/getEarthquakesPerCountry";
@@ -35,26 +37,56 @@ const barOptions = {
   },
 };
 
-const doughtnutOptions = {
+const doughnutOptions = {
   maintainAspectRatio: true, // To ensure the chart is a perfect circle
   radius: 100,
-  legend: {
-    display: true,
-    position: "right",
+};
+
+ChartJS.overrides.doughnut = {
+  plugins: {
+    // @ts-ignore
+    legend: {
+      display: false,
+    },
   },
 };
 
+async function queryEarthquakeAPI(query: string) {
+  const response = await axios.get(
+    `https://earthquake.usgs.gov/fdsnws/event/1/query${query}`
+  );
+
+  const data = response.data;
+
+  return data;
+}
+
 function ChartsComponent() {
-  const data = groupedDataMonthMagnitude();
+  const query =
+    "?format=geojson&starttime=2023-01-01&endtime=2023-12-31&minmagnitude=6.0";
+
+  const result = useQuery({
+    queryKey: ["earthquakes", query],
+    select: (data) => groupedDataMonthMagnitude(data),
+    queryFn: async () => {
+      return await queryEarthquakeAPI(query);
+    },
+  });
+
+  // const data = groupedDataMonthMagnitude();
   const latestEarthquakeData = getLatestEarthquake();
   const latestEarthquake = latestEarthquakeData?.properties;
   const earthquakesPerCountry = getEarthquakesPerCountry();
 
+  if (result.isLoading) {
+    return null;
+  }
+
   const barChartData = {
-    labels: data?.map((item: any) => item.label),
+    labels: result.data?.map((item: any) => item.label),
     datasets: [
       {
-        data: data?.map((item: any) => item.value),
+        data: result.data?.map((item: any) => item.value),
         backgroundColor: [
           "#3498db", // Dodger Blue
           "#2ecc71", // Emerald Green
@@ -122,10 +154,9 @@ function ChartsComponent() {
     <div className=" m-7">
       <div className=" flex flex-row space-x-9 ml-9 ">
         <Card className="bg-purple-500" latestEarthquake={latestEarthquake} />
-
         <Card className="bg-cyan-400" latestEarthquake={latestEarthquake} />
       </div>
-      <DoughnutChart data={chartData} options={doughtnutOptions} />
+      <DoughnutChart data={chartData} options={doughnutOptions} />
       <BarChart data={barChartData} options={barOptions} />
     </div>
   );
