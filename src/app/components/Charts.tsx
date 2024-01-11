@@ -7,7 +7,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
-import { groupedDataMonthMagnitude } from "../api/groupedDataMonthMagnitude";
+import { groupByMonthMagnitude } from "../utils/groupByMonthMagnitude";
 
 ChartJS.register(
   ArcElement,
@@ -66,7 +66,7 @@ function ChartsComponent() {
 
   const earthquakesByMonthMagnitude = useQuery({
     queryKey: ["earthquakes by month and magnitude", monthMagnitudeQuery],
-    select: (data) => groupedDataMonthMagnitude(data),
+    select: (data) => groupByMonthMagnitude(data),
     queryFn: async () => {
       return await queryEarthquakeAPI(monthMagnitudeQuery);
     },
@@ -90,7 +90,11 @@ function ChartsComponent() {
     },
   });
 
-  if (earthquakesByMonthMagnitude.isLoading) {
+  if (
+    earthquakesByMonthMagnitude.isLoading ||
+    latestEarthquake.isLoading ||
+    earthquakesPerCountry.isLoading
+  ) {
     return null;
   }
 
@@ -172,11 +176,11 @@ function ChartsComponent() {
       <div className="flex flex-row space-x-9">
         <Card
           className="bg-purple-500"
-          latestEarthquake={latestEarthquake.data.properties}
+          latestEarthquake={latestEarthquake.data?.properties}
         />
         <Card
           className="bg-cyan-400"
-          latestEarthquake={latestEarthquake.data.properties}
+          latestEarthquake={latestEarthquake.data?.properties}
         />
       </div>
       <BarChart data={barChartData} options={barOptions} />
