@@ -1,9 +1,10 @@
 "use client";
 
-import { QueryClientProvider, QueryClient } from "react-query";
-import DataView from "./components/DataView";
-import { SideNavbar } from "./components/SideNavbar";
+import Charts from "./components/Charts";
 
+import { SideNavbar } from "./components/SideNavbar";
+import { QueryClient, QueryClientProvider } from "react-query";
+import React from "react";
 const queryClient = new QueryClient();
 
 export default function Home() {
@@ -13,7 +14,7 @@ export default function Home() {
         <main>
           <h1 className="">Dashboard</h1>
           <SideNavbar>
-            <DataView />
+            <Charts />
           </SideNavbar>
         </main>
       </QueryClientProvider>
