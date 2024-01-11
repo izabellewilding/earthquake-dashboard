@@ -8,6 +8,9 @@ import { SideNavbar } from "./components/SideNavbar";
 import { groupByMonthMagnitude } from "./utils/groupByMonthMagnitude";
 import ClipLoader from "react-spinners/ClipLoader";
 import { groupBy } from "./utils/GroupChartData";
+import { getCurrentDateTime } from "./utils/getCurrentDataTime";
+import { getDateOneMonthAgo } from "./utils/getDateOneMonthAgo";
+import { Earthquake } from "./types/types";
 
 async function queryEarthquakeAPI(query: string) {
   const response = await axios.get(
@@ -49,10 +52,26 @@ export default function Home() {
     },
   });
 
+  const currentDate = getCurrentDateTime();
+  const dateOneMonthAgo = getDateOneMonthAgo();
+
+  const largestEarthquakeInLastMonthQuery = `?format=geojson&starttime=${dateOneMonthAgo}&endtime=${currentDate}`;
+
+  const largestEarthquakeInLastMonth = useQuery({
+    queryKey: ["largest earthquake in last month"],
+    queryFn: async () => {
+      const data = await queryEarthquakeAPI(largestEarthquakeInLastMonthQuery);
+      return data.features.reduce((a: Earthquake, b: Earthquake) =>
+        a.properties.mag > b.properties.mag ? a : b
+      );
+    },
+  });
+
   const isLoading =
     earthquakesByMonthMagnitude.isLoading ||
     latestEarthquake.isLoading ||
-    earthquakesPerCountry.isLoading;
+    earthquakesPerCountry.isLoading ||
+    largestEarthquakeInLastMonth.isLoading;
 
   if (isLoading) {
     return (
@@ -75,6 +94,7 @@ export default function Home() {
           earthquakesPerCountry={earthquakesPerCountry}
           earthquakesByMonthMagnitude={earthquakesByMonthMagnitude}
           latestEarthquake={latestEarthquake}
+          largestEarthquakeInLastMonth={largestEarthquakeInLastMonth}
         />
       </SideNavbar>
     </main>

@@ -1,6 +1,6 @@
 export function getWordsAfterLastComma(inputString: string) {
   // Find the last comma in the string
-  const lastCommaIndex = inputString.lastIndexOf(",");
+  const lastCommaIndex = inputString?.lastIndexOf(",");
 
   // Check if a comma was found
   if (lastCommaIndex !== -1) {

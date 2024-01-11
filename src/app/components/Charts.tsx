@@ -63,6 +63,7 @@ function ChartsComponent({
   earthquakesPerCountry,
   earthquakesByMonthMagnitude,
   latestEarthquake,
+  largestEarthquakeInLastMonth,
 }: any) {
   const barChartData = {
     labels: earthquakesByMonthMagnitude.data?.map((item: any) => item.label),
@@ -133,7 +134,7 @@ function ChartsComponent({
     ],
   };
 
-  console.warn(latestEarthquake.data);
+  console.warn("DATA", largestEarthquakeInLastMonth);
 
   return (
     <div className="flex flex-center flex-col ml-5 ">
@@ -142,12 +143,13 @@ function ChartsComponent({
       </h1>
       <div className="flex flex-row space-x-9 mb-4">
         <Card
-          className="bg-gradient-to-r from-indigo-500"
-          latestEarthquake={latestEarthquake.data?.properties}
+          className="bg-gradient-to-r from-purple-600 to-blue-500"
+          data={latestEarthquake.data?.properties}
+          latest
         />
         <Card
-          className="bg-gradient-to-r from-cyan-400"
-          latestEarthquake={latestEarthquake.data?.properties}
+          className="bg-gradient-to-r from-purple-600 to-blue-500"
+          data={largestEarthquakeInLastMonth?.data?.properties}
         />
       </div>
       <div className="flex flex-col mt-4">
@@ -167,6 +169,7 @@ export default function Charts({
   earthquakesPerCountry,
   earthquakesByMonthMagnitude,
   latestEarthquake,
+  largestEarthquakeInLastMonth,
 }: any) {
   return (
     <ErrorBoundary>
@@ -174,6 +177,7 @@ export default function Charts({
         earthquakesPerCountry={earthquakesPerCountry}
         earthquakesByMonthMagnitude={earthquakesByMonthMagnitude}
         latestEarthquake={latestEarthquake}
+        largestEarthquakeInLastMonth={largestEarthquakeInLastMonth}
       />
     </ErrorBoundary>
   );

@@ -1,12 +1,13 @@
 import { getWordsAfterLastComma } from "../utils/getWordsAfterLastComma";
 
 interface CardProps {
-  latestEarthquake: {
+  data: {
     mag: number;
     place: string;
     time: string;
   };
   className?: string;
+  latest?: boolean;
 }
 
 export function convertEpochToDate(epochTime: number) {
@@ -20,19 +21,23 @@ export function convertEpochToDate(epochTime: number) {
   return formattedDate;
 }
 
-export function Card({ latestEarthquake, className }: CardProps) {
+export function Card({ data, className, latest }: CardProps) {
   const combinedClassName = `rounded-xl min-w-60 align-middle max-w-64 p-6 ${
     className || ""
   }`;
 
+  console.warn(data.place);
+
   return (
     <div className={combinedClassName}>
-      <p className="text-xs mb-3">Latest Earthquake</p>
-      <p className=" text-2xl font-bold mb-3">
-        {getWordsAfterLastComma(latestEarthquake?.place)}{" "}
-        <span className="text-xl font-semibold">{`(M${latestEarthquake?.mag})`}</span>
+      <p className="text-xs mb-3">
+        {latest ? "Latest Earthquake" : "Largest Earthquake in past Month"}
       </p>
-      {/* <p className="text-md">{latestEarthquake?.time}</p> */}
+      <p className=" text-2xl font-bold mb-3">
+        {getWordsAfterLastComma(data?.place)}
+        <span className="text-xl font-semibold">{` (M${data?.mag})`}</span>
+      </p>
+      {/* <p className="text-md">{data?.time}</p> */}
     </div>
   );
 }
