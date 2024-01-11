@@ -8,6 +8,7 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
 import { groupByMonthMagnitude } from "../utils/groupByMonthMagnitude";
+import ClipLoader from "react-spinners/ClipLoader";
 
 ChartJS.register(
   ArcElement,
@@ -38,7 +39,7 @@ const barOptions = {
 
 const doughnutOptions = {
   maintainAspectRatio: true, // To ensure the chart is a perfect circle
-  radius: 300,
+  radius: 200,
 };
 
 ChartJS.overrides.doughnut = {
@@ -90,12 +91,22 @@ function ChartsComponent() {
     },
   });
 
-  if (
+  const loading =
     earthquakesByMonthMagnitude.isLoading ||
     latestEarthquake.isLoading ||
-    earthquakesPerCountry.isLoading
-  ) {
-    return null;
+    earthquakesPerCountry.isLoading;
+
+  if (loading) {
+    return (
+      <ClipLoader
+        color={"blue"}
+        loading={true}
+        cssOverride={{}}
+        size={150}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+    );
   }
 
   const barChartData = {
@@ -169,7 +180,7 @@ function ChartsComponent() {
   console.warn(latestEarthquake.data);
 
   return (
-    <div className="mx-7">
+    <div className="flex-1 ml-5">
       <h1 className="text-3xl font-bold mb-7">
         USGS Earthquake Data Dashboard
       </h1>
