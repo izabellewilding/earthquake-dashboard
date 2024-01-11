@@ -1,6 +1,6 @@
 import { convertEpochToMonthYear } from "./ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
-import { getLastWord } from "./getLastWord";
+import { getWordsAfterLastComma } from "./getWordsAfterLastComma";
 interface GroupedChartData {
   label: string;
   value: number;
@@ -26,7 +26,7 @@ export function groupMonthData(
 
 export function groupBy(arr: any, key: any) {
   return arr.reduce((result: any, obj: any) => {
-    const label = getLastWord(obj.properties.place);
+    const label = getWordsAfterLastComma(obj.properties.place);
     // console.warn("label", label);
     // If the key doesn't exist in the result, initialize an empty array
     if (!result[label]) {

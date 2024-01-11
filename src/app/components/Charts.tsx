@@ -43,7 +43,7 @@ const barOptions = {
 
 const doughnutOptions = {
   maintainAspectRatio: false,
-  radius: 150,
+  radius: 100,
 };
 
 ChartJS.overrides.doughnut = {

@@ -1,4 +1,4 @@
-import { getLastWord } from "../utils/getLastWord";
+import { getWordsAfterLastComma } from "../utils/getWordsAfterLastComma";
 
 interface CardProps {
   latestEarthquake: {
@@ -29,7 +29,7 @@ export function Card({ latestEarthquake, className }: CardProps) {
     <div className={combinedClassName}>
       <p className="text-xs mb-3">Latest Earthquake</p>
       <p className=" text-2xl font-bold mb-3">
-        {getLastWord(latestEarthquake?.place)}{" "}
+        {getWordsAfterLastComma(latestEarthquake?.place)}{" "}
         <span className="text-xl font-semibold">{`(M${latestEarthquake?.mag})`}</span>
       </p>
       {/* <p className="text-md">{latestEarthquake?.time}</p> */}
