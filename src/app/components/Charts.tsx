@@ -1,5 +1,7 @@
+"use client";
+
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { groupBy } from "../utils/GroupChartData";
@@ -38,13 +40,12 @@ const barOptions = {
 };
 
 const doughnutOptions = {
-  maintainAspectRatio: true, // To ensure the chart is a perfect circle
+  maintainAspectRatio: true,
   radius: 200,
 };
 
 ChartJS.overrides.doughnut = {
   plugins: {
-    // @ts-ignore
     legend: {
       display: false,
     },
@@ -67,9 +68,9 @@ function ChartsComponent() {
 
   const earthquakesByMonthMagnitude = useQuery({
     queryKey: ["earthquakes by month and magnitude", monthMagnitudeQuery],
-    select: (data) => groupByMonthMagnitude(data),
     queryFn: async () => {
-      return await queryEarthquakeAPI(monthMagnitudeQuery);
+      const data = await queryEarthquakeAPI(monthMagnitudeQuery);
+      return groupByMonthMagnitude(data);
     },
   });
 
@@ -77,17 +78,17 @@ function ChartsComponent() {
 
   const earthquakesPerCountry = useQuery({
     queryKey: ["earthquakes per country", earthquakesPerCountryQuery],
-    select: (data) => groupBy(data.features, "place"),
     queryFn: async () => {
-      return await queryEarthquakeAPI(earthquakesPerCountryQuery);
+      const data = await queryEarthquakeAPI(earthquakesPerCountryQuery);
+      return groupBy(data.features, "place");
     },
   });
 
   const latestEarthquake = useQuery({
     queryKey: ["latest earthquake", earthquakesPerCountryQuery],
-    select: (data) => data?.features[0],
     queryFn: async () => {
-      return await queryEarthquakeAPI(earthquakesPerCountryQuery);
+      const data = await queryEarthquakeAPI(earthquakesPerCountryQuery);
+      return data?.features[0];
     },
   });
 
