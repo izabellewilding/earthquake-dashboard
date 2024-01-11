@@ -173,12 +173,7 @@ export function SideNavbar({ children }: SideNavbarProps) {
           </ul>
         </div>
       </aside>
-      <div
-        className="sm:ml-64 absolute top-0 flex justify-center items-center left-0 bottom-0 right-0 p-4
-      "
-      >
-        {children}
-      </div>
+      <div className="sm:ml-64">{children}</div>
     </>
   );
 }

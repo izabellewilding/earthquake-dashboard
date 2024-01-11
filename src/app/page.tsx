@@ -31,8 +31,7 @@ export default function Home() {
     },
   });
 
-  const earthquakesPerCountryQuery =
-    "?format=geojson&starttime=2023-01-01&endtime=2023-12-31&minmagnitude=6.0";
+  const earthquakesPerCountryQuery = "?format=geojson";
 
   const earthquakesPerCountry = useQuery({
     queryKey: ["earthquakes per country", earthquakesPerCountryQuery],
@@ -50,16 +49,16 @@ export default function Home() {
     },
   });
 
-  const loading =
+  const isLoading =
     earthquakesByMonthMagnitude.isLoading ||
     latestEarthquake.isLoading ||
     earthquakesPerCountry.isLoading;
 
-  if (loading) {
+  if (isLoading) {
     return (
       <ClipLoader
         color={"blue"}
-        loading={true}
+        loading={isLoading}
         cssOverride={{}}
         size={150}
         aria-label="Loading Spinner"

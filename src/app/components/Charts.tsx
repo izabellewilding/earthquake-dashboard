@@ -24,6 +24,7 @@ ChartJS.register(
 );
 
 const barOptions = {
+  // maintainAspectRatio: true,
   scales: {
     x: {
       beginAtZero: true,
@@ -41,14 +42,19 @@ const barOptions = {
 };
 
 const doughnutOptions = {
-  maintainAspectRatio: true,
-  radius: 200,
+  maintainAspectRatio: false,
+  radius: 150,
 };
 
 ChartJS.overrides.doughnut = {
   plugins: {
     legend: {
       display: false,
+    },
+    title: {
+      display: true,
+      text: "Chart.js Doughnut Chart",
+      align: "start", // Align title to the start (left)
     },
   },
 };
@@ -62,6 +68,7 @@ function ChartsComponent({
     labels: earthquakesByMonthMagnitude.data?.map((item: any) => item.label),
     datasets: [
       {
+        label: "My First Dataset",
         data: earthquakesByMonthMagnitude.data?.map((item: any) => item.value),
         backgroundColor: [
           "#3498db", // Dodger Blue
@@ -129,22 +136,29 @@ function ChartsComponent({
   console.warn(latestEarthquake.data);
 
   return (
-    <div className="flex-1 ml-5">
+    <div className="flex flex-center flex-col ml-5 ">
       <h1 className="text-3xl font-bold mb-7">
         USGS Earthquake Data Dashboard
       </h1>
-      <div className="flex flex-row space-x-9">
+      <div className="flex flex-row space-x-9 mb-4">
         <Card
-          className="bg-purple-500"
+          className="bg-gradient-to-r from-indigo-500"
           latestEarthquake={latestEarthquake.data?.properties}
         />
         <Card
-          className="bg-cyan-400"
+          className="bg-gradient-to-r from-cyan-400"
           latestEarthquake={latestEarthquake.data?.properties}
         />
       </div>
-      <BarChart data={barChartData} options={barOptions} />
-      <DoughnutChart data={chartData} options={doughnutOptions} />
+      <div className="flex flex-col mt-4">
+        <div className="bg-gray-900 rounded-md p-4">
+          <BarChart data={barChartData} options={barOptions} />
+        </div>
+        <div className="flex justify-evenly" style={{ height: 400 }}>
+          <DoughnutChart data={chartData} options={doughnutOptions} />
+          <DoughnutChart data={chartData} options={doughnutOptions} />
+        </div>
+      </div>
     </div>
   );
 }
