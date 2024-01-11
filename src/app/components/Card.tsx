@@ -26,11 +26,9 @@ export function Card({ data, className, latest }: CardProps) {
     className || ""
   }`;
 
-  console.warn(data.place);
-
   return (
     <div className={combinedClassName}>
-      <p className="text-xs mb-3">
+      <p className="text-xs font-semibold mb-3">
         {latest ? "Latest Earthquake" : "Largest Earthquake in past Month"}
       </p>
       <p className=" text-2xl font-bold mb-3">

@@ -12,6 +12,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
+import { List } from "./List";
 
 ChartJS.register(
   ArcElement,
@@ -64,7 +65,9 @@ function ChartsComponent({
   earthquakesByMonthMagnitude,
   latestEarthquake,
   largestEarthquakeInLastMonth,
+  last10Earthquakes,
 }: any) {
+  console.warn(last10Earthquakes.data, "L 10 E");
   const barChartData = {
     labels: earthquakesByMonthMagnitude.data?.map((item: any) => item.label),
     datasets: [
@@ -134,8 +137,6 @@ function ChartsComponent({
     ],
   };
 
-  console.warn("DATA", largestEarthquakeInLastMonth);
-
   return (
     <div className="flex flex-center flex-col ml-5 ">
       <h1 className="text-3xl font-bold mb-7">
@@ -161,6 +162,7 @@ function ChartsComponent({
           <DoughnutChart data={chartData} options={doughnutOptions} />
         </div>
       </div>
+      <List data={last10Earthquakes?.data} />
     </div>
   );
 }
@@ -170,6 +172,7 @@ export default function Charts({
   earthquakesByMonthMagnitude,
   latestEarthquake,
   largestEarthquakeInLastMonth,
+  last10Earthquakes,
 }: any) {
   return (
     <ErrorBoundary>
@@ -178,6 +181,7 @@ export default function Charts({
         earthquakesByMonthMagnitude={earthquakesByMonthMagnitude}
         latestEarthquake={latestEarthquake}
         largestEarthquakeInLastMonth={largestEarthquakeInLastMonth}
+        last10Earthquakes={last10Earthquakes}
       />
     </ErrorBoundary>
   );

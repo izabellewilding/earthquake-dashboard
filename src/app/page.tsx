@@ -34,20 +34,28 @@ export default function Home() {
     },
   });
 
-  const earthquakesPerCountryQuery = "?format=geojson";
+  const allEarthquakesQuery = "?format=geojson";
 
   const earthquakesPerCountry = useQuery({
-    queryKey: ["earthquakes per country", earthquakesPerCountryQuery],
+    queryKey: ["earthquakes per country", allEarthquakesQuery],
     queryFn: async () => {
-      const data = await queryEarthquakeAPI(earthquakesPerCountryQuery);
+      const data = await queryEarthquakeAPI(allEarthquakesQuery);
       return groupBy(data.features, "place");
     },
   });
 
-  const latestEarthquake = useQuery({
-    queryKey: ["latest earthquake", earthquakesPerCountryQuery],
+  const last10Earthquakes = useQuery({
+    queryKey: ["last 10 earthquakes", allEarthquakesQuery],
     queryFn: async () => {
-      const data = await queryEarthquakeAPI(earthquakesPerCountryQuery);
+      const data = await queryEarthquakeAPI(allEarthquakesQuery);
+      return data.features.slice(-10);
+    },
+  });
+
+  const latestEarthquake = useQuery({
+    queryKey: ["latest earthquake", allEarthquakesQuery],
+    queryFn: async () => {
+      const data = await queryEarthquakeAPI(allEarthquakesQuery);
       return data?.features[0];
     },
   });
@@ -95,6 +103,7 @@ export default function Home() {
           earthquakesByMonthMagnitude={earthquakesByMonthMagnitude}
           latestEarthquake={latestEarthquake}
           largestEarthquakeInLastMonth={largestEarthquakeInLastMonth}
+          last10Earthquakes={last10Earthquakes}
         />
       </SideNavbar>
     </main>
