@@ -26,6 +26,8 @@ export function Card({ data, className, latest }: CardProps) {
     className || ""
   }`;
 
+  console.warn(data, "hshsshd");
+
   return (
     <div className={combinedClassName}>
       <p className="text-xs font-semibold mb-3">

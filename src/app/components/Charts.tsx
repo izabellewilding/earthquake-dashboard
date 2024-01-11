@@ -25,7 +25,8 @@ ChartJS.register(
 );
 
 const barOptions = {
-  // maintainAspectRatio: true,
+  responsive: true,
+  // maintainAspectRatio: false,
   scales: {
     x: {
       beginAtZero: true,
@@ -44,7 +45,8 @@ const barOptions = {
 
 const doughnutOptions = {
   maintainAspectRatio: false,
-  radius: 100,
+  radius: 150,
+  cutout: "80%",
 };
 
 ChartJS.overrides.doughnut = {
@@ -54,7 +56,7 @@ ChartJS.overrides.doughnut = {
     },
     title: {
       display: true,
-      text: "Chart.js Doughnut Chart",
+      text: "Countries with most earthquakes",
       align: "start", // Align title to the start (left)
     },
   },
@@ -67,7 +69,6 @@ function ChartsComponent({
   largestEarthquakeInLastMonth,
   last10Earthquakes,
 }: any) {
-  console.warn(last10Earthquakes.data, "L 10 E");
   const barChartData = {
     labels: earthquakesByMonthMagnitude.data?.map((item: any) => item.label),
     datasets: [
@@ -137,32 +138,39 @@ function ChartsComponent({
     ],
   };
 
+  console.warn(earthquakesPerCountry);
+
   return (
-    <div className="flex flex-center flex-col ml-5 ">
-      <h1 className="text-3xl font-bold mb-7">
-        USGS Earthquake Data Dashboard
-      </h1>
-      <div className="flex flex-row space-x-9 mb-4">
-        <Card
-          className="bg-gradient-to-r from-purple-600 to-blue-500"
-          data={latestEarthquake.data?.properties}
-          latest
-        />
-        <Card
-          className="bg-gradient-to-r from-purple-600 to-blue-500"
-          data={largestEarthquakeInLastMonth?.data?.properties}
-        />
-      </div>
-      <div className="flex flex-col mt-4">
-        <div className="bg-gray-900 rounded-md p-4">
-          <BarChart data={barChartData} options={barOptions} />
+    <div className="grid grid-cols-3 ">
+      <div className=" col-span-2 flex flex-center flex-col ml-5 ">
+        <h1 className="text-3xl font-bold mb-7">
+          USGS Earthquake Data Dashboard
+        </h1>
+        <div className="flex flex-row space-x-9 mb-4">
+          <Card
+            className="bg-gradient-to-r from-purple-600 to-blue-500"
+            data={latestEarthquake.properties}
+            latest
+          />
+          <Card
+            className="bg-gradient-to-r from-purple-600 to-blue-500"
+            data={largestEarthquakeInLastMonth?.properties}
+          />
         </div>
-        <div className="flex justify-evenly" style={{ height: 400 }}>
-          <DoughnutChart data={chartData} options={doughnutOptions} />
-          <DoughnutChart data={chartData} options={doughnutOptions} />
+        <div className="flex flex-col mt-4">
+          <div className="pb-4">
+            <BarChart data={barChartData} options={barOptions} />
+          </div>
+          <div
+            className="flex justify-evenly bg-gray-900 rounded-md"
+            style={{ height: 425 }}
+          >
+            <DoughnutChart data={chartData} options={doughnutOptions} />
+            {/* <DoughnutChart data={chartData} options={doughnutOptions} /> */}
+          </div>
         </div>
       </div>
-      <List data={last10Earthquakes?.data} />
+      <List data={last10Earthquakes} />
     </div>
   );
 }

@@ -23,6 +23,9 @@ async function queryEarthquakeAPI(query: string) {
 }
 
 export default function Home() {
+  const currentDate = getCurrentDateTime();
+  const dateOneMonthAgo = getDateOneMonthAgo();
+
   const monthMagnitudeQuery =
     "?format=geojson&starttime=2023-01-01&endtime=2023-12-31&minmagnitude=6.0";
 
@@ -34,52 +37,42 @@ export default function Home() {
     },
   });
 
-  const allEarthquakesQuery = "?format=geojson";
+  const lastWeek = "?format=geojson&starttime=2024-01-07&endtime=2024-01-08";
 
   const earthquakesPerCountry = useQuery({
-    queryKey: ["earthquakes per country", allEarthquakesQuery],
+    queryKey: ["earthquakes per country", lastWeek],
     queryFn: async () => {
-      const data = await queryEarthquakeAPI(allEarthquakesQuery);
+      const data = await queryEarthquakeAPI(lastWeek);
+
       return groupBy(data.features, "place");
     },
   });
 
-  const last10Earthquakes = useQuery({
-    queryKey: ["last 10 earthquakes", allEarthquakesQuery],
+  const earthquakesInLastMonthQuery = `?format=geojson&starttime=${dateOneMonthAgo}&endtime=${currentDate}`;
+
+  const allEarthquakesInLastMonth = useQuery({
+    queryKey: ["allEarthquakesInLastMonth", earthquakesInLastMonthQuery],
     queryFn: async () => {
-      const data = await queryEarthquakeAPI(allEarthquakesQuery);
-      return data.features.slice(-10);
+      const data = await queryEarthquakeAPI(earthquakesInLastMonthQuery);
+      return data;
     },
   });
 
-  const latestEarthquake = useQuery({
-    queryKey: ["latest earthquake", allEarthquakesQuery],
-    queryFn: async () => {
-      const data = await queryEarthquakeAPI(allEarthquakesQuery);
-      return data?.features[0];
-    },
-  });
-
-  const currentDate = getCurrentDateTime();
-  const dateOneMonthAgo = getDateOneMonthAgo();
-
-  const largestEarthquakeInLastMonthQuery = `?format=geojson&starttime=${dateOneMonthAgo}&endtime=${currentDate}`;
-
-  const largestEarthquakeInLastMonth = useQuery({
-    queryKey: ["largest earthquake in last month"],
-    queryFn: async () => {
-      const data = await queryEarthquakeAPI(largestEarthquakeInLastMonthQuery);
-      return data.features.reduce((a: Earthquake, b: Earthquake) =>
+  const largestEarthquakeInLastMonth =
+    allEarthquakesInLastMonth?.data?.features.reduce(
+      (a: Earthquake, b: Earthquake) =>
         a.properties.mag > b.properties.mag ? a : b
-      );
-    },
-  });
+    );
+
+  const latestEarthquake = allEarthquakesInLastMonth?.data?.features[0];
+
+  const last10Earthquakes =
+    allEarthquakesInLastMonth?.data?.features.slice(-10);
 
   const isLoading =
     earthquakesByMonthMagnitude.isLoading ||
-    latestEarthquake.isLoading ||
-    earthquakesPerCountry.isLoading ||
-    largestEarthquakeInLastMonth.isLoading;
+    allEarthquakesInLastMonth.isLoading ||
+    earthquakesPerCountry.isLoading;
 
   if (isLoading) {
     return (
