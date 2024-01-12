@@ -13,6 +13,7 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
 import { List } from "./List";
+import { getDataOneYearAgo } from "../utils/getDateOneYearAgo";
 
 ChartJS.register(
   ArcElement,
@@ -52,11 +53,11 @@ const doughnutOptions = {
 ChartJS.overrides.doughnut = {
   plugins: {
     legend: {
-      display: false,
+      display: true,
     },
     title: {
       display: true,
-      text: "Countries with most earthquakes",
+      text: "Countries with highest number of earthquakes",
       align: "start", // Align title to the start (left)
     },
   },
@@ -103,11 +104,19 @@ function ChartsComponent({
     ],
   };
 
-  const chartData = {
-    labels: Object.keys(earthquakesPerCountry.data || {}),
+  const filteredEarthquakesPerCountry = earthquakesPerCountry
+    ? Object.fromEntries(
+        Object.entries(earthquakesPerCountry.data).filter((item) =>
+          item ? item[1].length > 100 : {}
+        )
+      )
+    : {};
+
+  const doughnutChartData = {
+    labels: Object.keys(filteredEarthquakesPerCountry),
     datasets: [
       {
-        data: Object.values(earthquakesPerCountry.data || {}).map(
+        data: Object.values(filteredEarthquakesPerCountry || {}).map(
           (earthquakes) => earthquakes.length
         ),
         backgroundColor: [
@@ -138,11 +147,9 @@ function ChartsComponent({
     ],
   };
 
-  console.warn(earthquakesPerCountry);
-
   return (
     <div className="grid grid-cols-3 ">
-      <div className=" col-span-2 flex flex-center flex-col ml-5 ">
+      <div className=" col-span-2 flex flex-center flex-col ml-8">
         <h1 className="text-3xl font-bold mb-7">
           USGS Earthquake Data Dashboard
         </h1>
@@ -165,7 +172,7 @@ function ChartsComponent({
             className="flex justify-evenly bg-gray-900 rounded-md"
             style={{ height: 425 }}
           >
-            <DoughnutChart data={chartData} options={doughnutOptions} />
+            <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
             {/* <DoughnutChart data={chartData} options={doughnutOptions} /> */}
           </div>
         </div>
