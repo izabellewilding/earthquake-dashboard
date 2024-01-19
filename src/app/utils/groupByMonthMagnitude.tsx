@@ -1,4 +1,3 @@
-import { useEarthquakeQuery } from "../hooks/useEarthquakeQuery";
 import { convertEpochToMonthYear } from "./ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
 import { groupMonthData } from "./GroupChartData";

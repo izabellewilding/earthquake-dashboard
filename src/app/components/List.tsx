@@ -1,7 +1,7 @@
 import { Earthquake } from "../types/types";
 
 interface ListProps {
-  data: any;
+  data: Object[];
 }
 
 export const List = ({ data }: ListProps) => {

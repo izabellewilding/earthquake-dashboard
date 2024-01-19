@@ -34,3 +34,16 @@ export interface Earthquake {
   };
   id: string;
 }
+
+export interface MonthData {
+  label: string;
+  value: number;
+}
+
+export interface CardData {
+  properties: {
+    time: string;
+    mag: number;
+    place: string;
+  };
+}

@@ -13,6 +13,7 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
 import { List } from "./List";
+import { Earthquake, MonthData, CardData } from "../types/types";
 
 ChartJS.register(
   ArcElement,
@@ -51,16 +52,22 @@ const doughnutOptions = {
 
 ChartJS.overrides.doughnut = {
   plugins: {
-    legend: {
-      display: false,
-    },
+    // @ts-ignore
     title: {
       display: true,
-      text: "Countries with most earthquakes",
-      align: "start", // Align title to the start (left)
+      text: "Number of earthquakes per country this week",
+      align: "center", // Align title to the start (left)
     },
   },
 };
+
+interface ChartsComponentProps {
+  earthquakesPerCountry: Object;
+  earthquakesByMonthMagnitude: MonthData[];
+  latestEarthquake: CardData;
+  largestEarthquakeInLastMonth: CardData;
+  last10Earthquakes: Earthquake[];
+}
 
 function ChartsComponent({
   earthquakesPerCountry,
@@ -68,13 +75,13 @@ function ChartsComponent({
   latestEarthquake,
   largestEarthquakeInLastMonth,
   last10Earthquakes,
-}: any) {
+}: ChartsComponentProps) {
   const barChartData = {
-    labels: earthquakesByMonthMagnitude.data?.map((item: any) => item.label),
+    labels: earthquakesByMonthMagnitude.map((item: any) => item.label),
     datasets: [
       {
-        label: "My First Dataset",
-        data: earthquakesByMonthMagnitude.data?.map((item: any) => item.value),
+        label: "USGS Earthquakes",
+        data: earthquakesByMonthMagnitude.map((item: any) => item.value),
         backgroundColor: [
           "#3498db", // Dodger Blue
           "#2ecc71", // Emerald Green
@@ -103,16 +110,12 @@ function ChartsComponent({
     ],
   };
 
-  console.warn("ABC", earthquakesPerCountry.data);
-
   const doughnutChartData = {
-    labels: [Object.keys(earthquakesPerCountry.data || {})],
+    labels: Object.keys(earthquakesPerCountry || {}),
     datasets: [
       {
-        labels: Object.values(earthquakesPerCountry.data).map((earthquakes) =>
-          console.warn(earthquakes.properties, "EQ")
-        ),
-        data: Object.values(earthquakesPerCountry.data || {}).map(
+        label: "USGS Earthquakes",
+        data: Object.values(earthquakesPerCountry || {}).map(
           (earthquakes) => earthquakes.length
         ),
         backgroundColor: [
@@ -143,15 +146,13 @@ function ChartsComponent({
     ],
   };
 
-  console.warn(earthquakesPerCountry);
-
   return (
-    <div className="grid grid-cols-3 ">
+    <div className="grid grid-cols-1 lg:grid-cols-3">
       <div className=" col-span-2 flex flex-center flex-col ml-5 ">
-        <h1 className="text-3xl font-bold mb-7">
+        <h1 className="text-3xl font-bold mb-7 p-5">
           USGS Earthquake Data Dashboard
         </h1>
-        <div className="flex flex-row space-x-9 mb-4">
+        <div className="flex flex-col gap-4 md:flex-row mb-4">
           <Card
             className="bg-gradient-to-r from-purple-600 to-blue-500"
             data={latestEarthquake.properties}
@@ -171,7 +172,6 @@ function ChartsComponent({
             style={{ height: 425 }}
           >
             <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
-            {/* <DoughnutChart data={chartData} options={doughnutOptions} /> */}
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ interface CardProps {
 }
 
 export function convertEpochToDate(epochTime: number) {
-  const date = new Date(epochTime); // Multiply by 1000 to convert seconds to milliseconds
+  const date = new Date(epochTime);
 
   const options = { year: "numeric", month: "long" };
   const formattedDate = new Intl.DateTimeFormat("en-US", options as any).format(
@@ -35,7 +35,6 @@ export function Card({ data, className, latest }: CardProps) {
         {getWordsAfterLastComma(data?.place)}
         <span className="text-xl font-semibold">{` (M${data?.mag})`}</span>
       </p>
-      {/* <p className="text-md">{data?.time}</p> */}
     </div>
   );
 }

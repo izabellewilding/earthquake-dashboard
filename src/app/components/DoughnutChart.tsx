@@ -9,7 +9,7 @@ type DoughnutChartProps = {
 
 export function DoughnutChart({ data, options }: DoughnutChartProps) {
   return (
-    <div>
+    <div className="p-4">
       <Doughnut data={data} options={options} />
     </div>
   );

@@ -74,6 +74,11 @@ export default function Home() {
     allEarthquakesInLastMonth.isLoading ||
     earthquakesPerCountry.isLoading;
 
+  const error =
+    earthquakesByMonthMagnitude.error ||
+    allEarthquakesInLastMonth.error ||
+    earthquakesPerCountry.error;
+
   if (isLoading) {
     return (
       <ClipLoader
@@ -87,13 +92,18 @@ export default function Home() {
     );
   }
 
+  if (error) {
+    return "An error occured, please try refreshing the page...";
+  }
+
+  console.warn(last10Earthquakes);
+
   return (
     <main>
-      <h1 className="">Dashboard</h1>
       <SideNavbar>
         <Charts
-          earthquakesPerCountry={earthquakesPerCountry}
-          earthquakesByMonthMagnitude={earthquakesByMonthMagnitude}
+          earthquakesPerCountry={earthquakesPerCountry.data}
+          earthquakesByMonthMagnitude={earthquakesByMonthMagnitude.data || {}}
           latestEarthquake={latestEarthquake}
           largestEarthquakeInLastMonth={largestEarthquakeInLastMonth}
           last10Earthquakes={last10Earthquakes}
