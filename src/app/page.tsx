@@ -11,7 +11,6 @@ import { groupBy } from "./utils/GroupChartData";
 import { getCurrentDateTime } from "./utils/getCurrentDataTime";
 import { getDateOneMonthAgo } from "./utils/getDateOneMonthAgo";
 import { Earthquake } from "./types/types";
-import { getDataOneYearAgo } from "./utils/getDateOneYearAgo";
 
 async function queryEarthquakeAPI(query: string) {
   const response = await axios.get(
@@ -26,7 +25,6 @@ async function queryEarthquakeAPI(query: string) {
 export default function Home() {
   const currentDate = getCurrentDateTime();
   const dateOneMonthAgo = getDateOneMonthAgo();
-  const oneYearAgo = getDataOneYearAgo();
 
   const monthMagnitudeQuery =
     "?format=geojson&starttime=2023-01-01&endtime=2023-12-31&minmagnitude=6.0";
@@ -39,14 +37,14 @@ export default function Home() {
     },
   });
 
-  const oneYearAgoQuery = `?format=geojson`;
+  const lastWeek = "?format=geojson&starttime=2024-01-07&endtime=2024-01-08";
 
   const earthquakesPerCountry = useQuery({
-    queryKey: ["earthquakes per country", oneYearAgoQuery],
+    queryKey: ["earthquakes per country", lastWeek],
     queryFn: async () => {
-      const data = await queryEarthquakeAPI(oneYearAgoQuery);
-      const groupedData = groupBy(data.features, "place");
-      return groupedData;
+      const data = await queryEarthquakeAPI(lastWeek);
+
+      return groupBy(data.features, "place");
     },
   });
 
