@@ -96,8 +96,6 @@ export default function Home() {
     return "An error occured, please try refreshing the page...";
   }
 
-  console.warn(last10Earthquakes);
-
   return (
     <main>
       <SideNavbar>
