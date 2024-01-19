@@ -103,10 +103,15 @@ function ChartsComponent({
     ],
   };
 
-  const chartData = {
-    labels: Object.keys(earthquakesPerCountry.data || {}),
+  console.warn("ABC", earthquakesPerCountry.data);
+
+  const doughnutChartData = {
+    labels: [Object.keys(earthquakesPerCountry.data || {})],
     datasets: [
       {
+        labels: Object.values(earthquakesPerCountry.data).map((earthquakes) =>
+          console.warn(earthquakes.properties, "EQ")
+        ),
         data: Object.values(earthquakesPerCountry.data || {}).map(
           (earthquakes) => earthquakes.length
         ),
@@ -165,7 +170,7 @@ function ChartsComponent({
             className="flex justify-evenly bg-gray-900 rounded-md"
             style={{ height: 425 }}
           >
-            <DoughnutChart data={chartData} options={doughnutOptions} />
+            <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
             {/* <DoughnutChart data={chartData} options={doughnutOptions} /> */}
           </div>
         </div>
