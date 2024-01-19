@@ -28,7 +28,6 @@ ChartJS.register(
 const barOptions = {
   responsive: true,
   // maintainAspectRatio: false,
-
   scales: {
     x: {
       beginAtZero: true,
@@ -41,10 +40,6 @@ const barOptions = {
     title: {
       display: true,
       text: "Number of Earthquakes with magnitude > 6.0 by month (2023)",
-      color: "#d7e6ffad",
-      font: {
-        weight: "regular",
-      },
     },
   },
 };
@@ -57,14 +52,13 @@ const doughnutOptions = {
 
 ChartJS.overrides.doughnut = {
   plugins: {
+    legend: {
+      display: true,
+    },
     title: {
       display: true,
       text: "Countries with highest number of earthquakes",
       align: "start", // Align title to the start (left)
-      color: "#d7e6ffad",
-      font: {
-        weight: "regular",
-      },
     },
   },
 };
@@ -80,7 +74,7 @@ function ChartsComponent({
     labels: earthquakesByMonthMagnitude.data?.map((item: any) => item.label),
     datasets: [
       {
-        label: "USGS DATA",
+        label: "My First Dataset",
         data: earthquakesByMonthMagnitude.data?.map((item: any) => item.value),
         backgroundColor: [
           "#3498db", // Dodger Blue
@@ -154,7 +148,7 @@ function ChartsComponent({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3">
+    <div className="grid grid-cols-3 ">
       <div className=" col-span-2 flex flex-center flex-col ml-8">
         <h1 className="text-3xl font-bold mb-7">
           USGS Earthquake Data Dashboard
@@ -171,7 +165,7 @@ function ChartsComponent({
           />
         </div>
         <div className="flex flex-col mt-4">
-          <div className="pb-4 min-h-72">
+          <div className="pb-4">
             <BarChart data={barChartData} options={barOptions} />
           </div>
           <div
