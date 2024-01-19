@@ -152,7 +152,7 @@ function ChartsComponent({
         <h1 className="text-3xl font-bold mb-7 p-5">
           USGS Earthquake Data Dashboard
         </h1>
-        <div className="flex flex-col gap-4 md:flex-row mb-4">
+        <div className="flex flex-col gap-6 md:flex-row mb-4 md:pl-4">
           <Card
             className="bg-gradient-to-r from-purple-600 to-blue-500"
             data={latestEarthquake.properties}
@@ -168,7 +168,7 @@ function ChartsComponent({
             <BarChart data={barChartData} options={barOptions} />
           </div>
           <div
-            className="flex justify-evenly bg-gray-900 rounded-md"
+            className="flex justify-evenly md:ml-4 bg-slate-900 rounded-md"
             style={{ height: 425 }}
           >
             <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
