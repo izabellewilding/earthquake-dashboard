@@ -57,7 +57,7 @@ export function SideNavbar({ children }: SideNavbarProps) {
           </ul>
         </div>
       </aside>
-      <div className="sm:ml-56">{children}</div>
+      <div className="sm:ml-56 p-6 md:p-0">{children}</div>
     </>
   );
 }

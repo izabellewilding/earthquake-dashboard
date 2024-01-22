@@ -8,11 +8,7 @@ type BarChartProps = {
 };
 
 export function BarChart({ data, options }: BarChartProps) {
-  return (
-    <div>
-      <Bar data={data} options={options} />
-    </div>
-  );
+  return <Bar data={data} options={options} />;
 }
 
 export default BarChart;

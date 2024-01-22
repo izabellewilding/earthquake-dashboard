@@ -22,14 +22,14 @@ export function convertEpochToDate(epochTime: number) {
 }
 
 export function Card({ data, className, latest }: CardProps) {
-  const combinedClassName = `rounded-xl min-w-60 align-middle max-w-64 p-6 ${
+  const combinedClassName = `rounded-xl min-w-60 w-full h-full md:max-w-64 p-6 ${
     className || ""
   }`;
 
   return (
     <div className={combinedClassName}>
       <p className="text-xs font-semibold mb-3">
-        {latest ? "Latest Earthquake" : "Largest Earthquake in past Month"}
+        {latest ? "Latest Earthquake" : "Largest earthquake in the last month"}
       </p>
       <p className=" text-2xl font-bold mb-3">
         {getWordsAfterLastComma(data?.place)}

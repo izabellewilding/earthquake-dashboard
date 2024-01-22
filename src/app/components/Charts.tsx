@@ -27,7 +27,8 @@ ChartJS.register(
 
 const barOptions = {
   responsive: true,
-  // maintainAspectRatio: false,
+  maintainAspectRatio: false,
+
   scales: {
     x: {
       beginAtZero: true,
@@ -55,7 +56,7 @@ ChartJS.overrides.doughnut = {
     // @ts-ignore
     title: {
       display: true,
-      text: "Number of earthquakes per country this week",
+      text: "All earthquakes this week grouped by country.",
       align: "center", // Align title to the start (left)
     },
   },
@@ -148,11 +149,11 @@ function ChartsComponent({
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3">
-      <div className=" col-span-2 flex flex-center flex-col ml-5 ">
+      <div className=" col-span-2 flex flex-center flex-col md:m-6 ">
         <h1 className="text-3xl font-bold mb-7 p-5">
           USGS Earthquake Data Dashboard
         </h1>
-        <div className="flex flex-col gap-6 md:flex-row mb-4 md:pl-4">
+        <div className="flex flex-col gap-6 items-center md:flex-row mb-4 md:pl-4">
           <Card
             className="bg-gradient-to-r from-purple-600 to-blue-500"
             data={latestEarthquake.properties}
@@ -164,11 +165,11 @@ function ChartsComponent({
           />
         </div>
         <div className="flex flex-col mt-4">
-          <div className="pb-4">
+          <div className="pb-4 h-80 md:h-96">
             <BarChart data={barChartData} options={barOptions} />
           </div>
           <div
-            className="flex justify-evenly md:ml-4 bg-slate-900 rounded-md"
+            className="flex justify-evenly sm:ml-4 bg-slate-800 rounded-md mb-5 ml-0 sm:mb-0"
             style={{ height: 425 }}
           >
             <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
