@@ -169,7 +169,7 @@ function ChartsComponent({
             <BarChart data={barChartData} options={barOptions} />
           </div>
           <div
-            className="flex justify-evenly sm:ml-4 sm:mb-0 bg-slate-800 rounded-md mb-5 ml-0"
+            className="flex justify-evenly sm:ml-4  bg-slate-900 rounded-md mb-5 ml-0 "
             style={{ height: 425 }}
           >
             <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
