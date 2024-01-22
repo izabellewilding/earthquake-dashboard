@@ -29,7 +29,7 @@ export function Card({ data, className, latest }: CardProps) {
   return (
     <div className={combinedClassName}>
       <p className="text-xs font-semibold mb-3">
-        {latest ? "Latest Earthquake" : "Largest earthquake in the last month"}
+        {latest ? "Latest earthquake" : "Largest earthquake in the last month"}
       </p>
       <p className=" text-2xl font-bold mb-3">
         {getWordsAfterLastComma(data?.place)}

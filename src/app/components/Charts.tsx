@@ -40,7 +40,7 @@ const barOptions = {
   plugins: {
     title: {
       display: true,
-      text: "Number of Earthquakes with magnitude > 6.0 by month (2023)",
+      text: "Number of earthquakes with magnitude > 6.0 by month (2023)",
     },
   },
 };
@@ -56,7 +56,7 @@ ChartJS.overrides.doughnut = {
     // @ts-ignore
     title: {
       display: true,
-      text: "All earthquakes this week grouped by country.",
+      text: "All earthquakes this week (by country)",
       align: "center", // Align title to the start (left)
     },
   },
