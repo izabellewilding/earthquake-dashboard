@@ -3,7 +3,6 @@
 import React from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { Chart as ChartJS } from "chart.js/auto";
 import {
   ArcElement,
   BarElement,
@@ -12,6 +11,7 @@ import {
   Legend,
   Title,
   Tooltip,
+  Chart as ChartJS,
 } from "chart.js";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { BarChart } from "./BarChart";
