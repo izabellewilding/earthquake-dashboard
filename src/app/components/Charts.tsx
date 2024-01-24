@@ -15,7 +15,7 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
 import { List } from "./List";
-import { Earthquake, MonthData, CardData } from "../types/types";
+import { Earthquake } from "../types/types";
 import axios from "axios";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -84,9 +84,7 @@ async function queryEarthquakeAPI(query: string) {
   return data;
 }
 
-interface ChartsComponentProps {}
-
-function ChartsComponent({}: any) {
+function ChartsComponent() {
   const currentDate = getCurrentDateTime();
   const dateOneMonthAgo = getDateOneMonthAgo();
 
@@ -130,8 +128,10 @@ function ChartsComponent({}: any) {
 
   const latestEarthquake = allEarthquakesInLastMonth?.data?.features[0];
 
-  const last10Earthquakes =
-    allEarthquakesInLastMonth?.data?.features.slice(-10);
+  const last10Earthquakes = allEarthquakesInLastMonth?.data?.features.slice(
+    0,
+    10
+  );
 
   const isLoading =
     earthquakesByMonthMagnitude.isLoading ||
@@ -264,22 +264,10 @@ function ChartsComponent({}: any) {
   );
 }
 
-export default function Charts({
-  earthquakesPerCountry,
-  earthquakesByMonthMagnitude,
-  latestEarthquake,
-  largestEarthquakeInLastMonth,
-  last10Earthquakes,
-}: any) {
+export default function Charts() {
   return (
     <ErrorBoundary>
-      <ChartsComponent
-        earthquakesPerCountry={earthquakesPerCountry}
-        earthquakesByMonthMagnitude={earthquakesByMonthMagnitude}
-        latestEarthquake={latestEarthquake}
-        largestEarthquakeInLastMonth={largestEarthquakeInLastMonth}
-        last10Earthquakes={last10Earthquakes}
-      />
+      <ChartsComponent />
     </ErrorBoundary>
   );
 }

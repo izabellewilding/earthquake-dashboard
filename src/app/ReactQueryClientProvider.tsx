@@ -13,7 +13,7 @@ export const ReactQueryClientProvider = ({
       new QueryClient({
         defaultOptions: {
           queries: {
-            // stateTime: 60 * 100,
+            staleTime: 10 * (60 * 1000), //10 mins
           },
         },
       })
