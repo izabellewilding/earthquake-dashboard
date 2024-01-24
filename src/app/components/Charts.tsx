@@ -1,29 +1,31 @@
 "use client";
 
+import React from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { Chart as ChartJS } from "chart.js/auto";
 import {
+  ArcElement,
+  BarElement,
   CategoryScale,
   LinearScale,
-  BarElement,
-  Title,
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
   Legend,
+  Title,
+  Tooltip,
 } from "chart.js";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { Card } from "./Card";
+import { DoughnutChart } from "./DoughnutChart";
 import { List } from "./List";
 import { Earthquake } from "../types/types";
-import axios from "axios";
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { groupByMonthMagnitude } from "../utils/groupByMonthMagnitude";
-import ClipLoader from "react-spinners/ClipLoader";
-import { groupBy } from "../utils/GroupChartData";
 import { getCurrentDateTime } from "../utils/getCurrentDataTime";
 import { getDateOneMonthAgo } from "../utils/getDateOneMonthAgo";
+import { groupBy } from "../utils/groupChartData";
+import ClipLoader from "react-spinners/ClipLoader";
+
+//chart configuration
 
 ChartJS.register(
   ArcElement,
@@ -72,8 +74,7 @@ ChartJS.overrides.doughnut = {
   },
 };
 
-//query setup
-
+//api query function
 async function queryEarthquakeAPI(query: string) {
   const response = await axios.get(
     `https://earthquake.usgs.gov/fdsnws/event/1/query${query}`
@@ -83,6 +84,19 @@ async function queryEarthquakeAPI(query: string) {
 
   return data;
 }
+
+const chartColors = [
+  "#3498db",
+  "#2ecc71",
+  "#9b59b6",
+  "#1abc9c",
+  "#2980b9",
+  "#e74c3c",
+  "#d35400",
+  "#e67e22",
+  "#c56cf0",
+  "#fd79a8",
+];
 
 function ChartsComponent() {
   const currentDate = getCurrentDateTime();
@@ -166,30 +180,8 @@ function ChartsComponent() {
       {
         label: "USGS Earthquakes",
         data: earthquakesByMonthMagnitude.data.map((item: any) => item.value),
-        backgroundColor: [
-          "#3498db", // Dodger Blue
-          "#2ecc71", // Emerald Green
-          "#9b59b6", // Amethyst Purple
-          "#1abc9c", // Turquoise
-          "#2980b9", // Belize Hole Blue
-          "#e74c3c", // Alizarin Red
-          "#d35400", // Pumpkin Orange (replaced)
-          "#e67e22", // Carrot Orange
-          "#c56cf0", // Soft Purple
-          "#fd79a8", // Light Pink
-        ],
-        hoverBackgroundColor: [
-          "#2980b9", // Shadow for Dodger Blue
-          "#27ae60", // Shadow for Emerald Green
-          "#8e44ad", // Shadow for Amethyst Purple
-          "#16a085", // Shadow for Turquoise
-          "#1f618d", // Shadow for Belize Hole Blue
-          "#c0392b", // Shadow for Alizarin Red
-          "#d35400", // Shadow for Carrot Orange
-          "#e67e22", // Shadow for Carrot Orange (replaced)
-          "#af7ac5", // Shadow for Soft Purple
-          "#e84393", // Shadow for Light Pink
-        ],
+        backgroundColor: chartColors,
+        hoverBackgroundColor: chartColors.map((color) => `${color}80`), // Add alpha for hover effect
       },
     ],
   };
@@ -202,30 +194,8 @@ function ChartsComponent() {
         data: Object.values(earthquakesPerCountry.data || {}).map(
           (earthquakes: any) => earthquakes.length
         ),
-        backgroundColor: [
-          "#3498db", // Dodger Blue
-          "#2ecc71", // Emerald Green
-          "#9b59b6", // Amethyst Purple
-          "#1abc9c", // Turquoise
-          "#2980b9", // Belize Hole Blue
-          "#e74c3c", // Alizarin Red
-          "#d35400", // Pumpkin Orange (replaced)
-          "#e67e22", // Carrot Orange
-          "#c56cf0", // Soft Purple
-          "#fd79a8", // Light Pink
-        ],
-        hoverBackgroundColor: [
-          "#2980b9", // Shadow for Dodger Blue
-          "#27ae60", // Shadow for Emerald Green
-          "#8e44ad", // Shadow for Amethyst Purple
-          "#16a085", // Shadow for Turquoise
-          "#1f618d", // Shadow for Belize Hole Blue
-          "#c0392b", // Shadow for Alizarin Red
-          "#d35400", // Shadow for Carrot Orange
-          "#e67e22", // Shadow for Carrot Orange (replaced)
-          "#af7ac5", // Shadow for Soft Purple
-          "#e84393", // Shadow for Light Pink
-        ],
+        backgroundColor: chartColors,
+        hoverBackgroundColor: chartColors.map((color) => `${color}80`), // Add alpha for hover effect
       },
     ],
   };

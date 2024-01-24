@@ -1,6 +1,6 @@
 import { convertEpochToMonthYear } from "./ConvertEpochToYearMonth";
 import { Earthquake } from "../types/types";
-import { groupMonthData } from "./GroupChartData";
+import { groupMonthData } from "./groupChartData";
 
 export function groupByMonthMagnitude(data: any): any {
   const filteredByMagnitude = data?.features
