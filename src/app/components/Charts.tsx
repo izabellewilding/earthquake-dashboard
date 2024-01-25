@@ -22,7 +22,7 @@ import { Earthquake } from "../types/types";
 import { groupByMonthMagnitude } from "../utils/groupByMonthMagnitude";
 import { getCurrentDateTime } from "../utils/getCurrentDataTime";
 import { getDateOneMonthAgo } from "../utils/getDateOneMonthAgo";
-import { groupBy } from "../utils/groupChartData";
+import { groupBy } from "../utils/groupBy";
 import ClipLoader from "react-spinners/ClipLoader";
 
 //chart configuration
@@ -120,7 +120,7 @@ function ChartsComponent() {
     queryFn: async () => {
       const data = await queryEarthquakeAPI(lastWeek);
 
-      return groupBy(data.features, "place");
+      return groupBy(data.features);
     },
   });
 
