@@ -1,6 +1,6 @@
 import { getWordsAfterLastComma } from "./getWordsAfterLastComma";
 
-export function groupBy(arr: any, key: any) {
+export function groupBy(arr: []) {
   return arr.reduce((result: any, obj: any) => {
     const label = getWordsAfterLastComma(obj.properties.place);
     if (!result[label]) {
