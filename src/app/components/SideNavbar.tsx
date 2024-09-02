@@ -6,7 +6,7 @@ interface SideNavbarProps {
 
 export function SideNavbar({ children }: SideNavbarProps) {
   return (
-    <>
+    <div className="">
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
@@ -58,6 +58,6 @@ export function SideNavbar({ children }: SideNavbarProps) {
         </div>
       </aside>
       <div className="sm:ml-56 p-6 md:p-0">{children}</div>
-    </>
+    </div>
   );
 }
