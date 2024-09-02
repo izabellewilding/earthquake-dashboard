@@ -201,9 +201,9 @@ function ChartsComponent() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3">
+    <div className="grid grid-cols-1 lg:grid-cols-3 bg-background">
       <div className=" col-span-2 flex flex-center flex-col md:m-6 ">
-        <h1 className="text-3xl font-bold mb-7 p-5">
+        <h1 className="text-2xl mb-7 p-5 text-text">
           USGS Earthquake Data Dashboard
         </h1>
         <div className="flex flex-col gap-6 items-center md:flex-row mb-4 md:pl-4">

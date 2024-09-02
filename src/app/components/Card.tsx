@@ -22,7 +22,7 @@ export function convertEpochToDate(epochTime: number) {
 }
 
 export function Card({ data, className, latest }: CardProps) {
-  const combinedClassName = `rounded-xl min-w-60 w-full h-full md:max-w-64 p-6 ${
+  const combinedClassName = `rounded-xl min-w-60 w-full h-full md:max-w-64 p-6 shadow-xl text-text ${
     className || ""
   }`;
 

@@ -4,7 +4,7 @@ import { SideNavbar } from "./components/SideNavbar";
 
 export default function Home() {
   return (
-    <main className="bg-slate-900">
+    <main className="bg-background">
       <SideNavbar>
         <Charts />
       </SideNavbar>
