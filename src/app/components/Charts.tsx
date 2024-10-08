@@ -24,6 +24,7 @@ import { getCurrentDateTime } from "../utils/getCurrentDataTime";
 import { getDateOneMonthAgo } from "../utils/getDateOneMonthAgo";
 import { groupBy } from "../utils/groupBy";
 import ClipLoader from "react-spinners/ClipLoader";
+import { GridGraphic } from "./GridGraphic";
 
 //chart configuration
 
@@ -203,23 +204,25 @@ function ChartsComponent() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 bg-slate-900">
-      <div className=" col-span-2 flex flex-center flex-col md:m-6 ">
-        <h1 className="text-2xl mb-7 p-5 text-text">
+      <div className="relative col-span-2 flex flex-center flex-col md:m-6 ">
+        <GridGraphic />
+        <h1 className="text-2xl mb-3 text-white">
           USGS Earthquake Data Dashboard
         </h1>
-        <div className="flex flex-col gap-6 items-center md:flex-row mb-4 md:pl-4">
-          <h1>Statistics</h1>
-          <div className="flex flex-row">
-            <Card
-              className="bg-gradient-to-r"
-              data={latestEarthquake.properties}
-              latest
-            />
-            <Card
-              className="bg-gradient-to-r"
-              data={largestEarthquakeInLastMonth?.properties}
-            />
-          </div>
+        <h1 className="text-md mb-12 text-slate-300">
+          This is a data dashboard displaying live global earthquake data using
+          the USGS API.
+        </h1>
+        <div className="grid gap-1">
+          <Card
+            className="bg-gradient-to-r"
+            data={latestEarthquake.properties}
+            latest
+          />
+          <Card
+            className="bg-gradient-to-r"
+            data={largestEarthquakeInLastMonth?.properties}
+          />
         </div>
         <div className="flex flex-col mt-4">
           <div className="pb-4 h-80 md:h-96 bg-slate-800 rounded-md p-5 shadow-2xl">

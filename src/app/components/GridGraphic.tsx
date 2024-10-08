@@ -1,0 +1,32 @@
+import * as React from "react";
+
+export const GridGraphic = (props: any) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={982}
+    height={786}
+    fill="none"
+    className="absolute top-0"
+    {...props}
+  >
+    <path
+      fill="url(#a)"
+      fillRule="evenodd"
+      d="M490 401v136H348.5V401H490Zm0 384.5V676H348.5v109.5h-1V676H206v109.5h-1V676H63.5v109.5h-1V676H0v-1h62.5V538H0v-1h62.5V401H0v-1h62.5V258H0v-1h62.5V116H0v-1h62.5V0h1v115H205V0h1v115h141.5V0h1v115H490V0h1v115h136.5V0h1v115H765V0h1v115h136.5V0h1v115H982v1h-78.5v141H982v1h-78.5v142H982v1h-78.5v136H982v1h-78.5v137H982v1h-78.5v109.5h-1V676H766v109.5h-1V676H628.5v109.5h-1V676H491v109.5h-1ZM902.5 675V538H766v137h136.5Zm0-138V401H766v136h136.5Zm0-137V258H766v142h136.5Zm0-143V116H766v141h136.5Zm-275 418H491V538h136.5v137Zm137.5 0H628.5V538H765v137Zm-416.5 0H490V538H348.5v137Zm-1-137v137H206V538h141.5ZM205 538v137H63.5V538H205Zm560-1V401H628.5v136H765Zm0-137V258H628.5v142H765Zm0-143V116H628.5v141H765ZM347.5 401v136H206V401h141.5ZM205 401v136H63.5V401H205Zm422.5 0v136H491V401h136.5Zm0-285H491v141h136.5V116Zm0 142H491v142h136.5V258Zm-564-1V116H205v141H63.5Zm0 143V258H205v142H63.5ZM206 116v141h141.5V116H206Zm142.5 0v141H490V116H348.5ZM206 400V258h141.5v142H206Zm142.5-142v142H490V258H348.5Z"
+      clipRule="evenodd"
+    />
+    <defs>
+      <radialGradient
+        id="a"
+        cx={0}
+        cy={0}
+        r={1}
+        gradientTransform="matrix(0 513.25 -679.989 0 491 392.75)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#fff" stopOpacity={0.2} />
+        <stop offset={1} stopOpacity={0} />
+      </radialGradient>
+    </defs>
+  </svg>
+);

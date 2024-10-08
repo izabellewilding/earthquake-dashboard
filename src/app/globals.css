@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -26,7 +24,6 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
 
 .card-border {
   border: solid 1px #3498db59;
