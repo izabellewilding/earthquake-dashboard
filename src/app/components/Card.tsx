@@ -28,7 +28,7 @@ export function Card({ data, className, latest }: CardProps) {
 
   return (
     <div className={combinedClassName}>
-      <p className="text-xs font-semibold mb-3">
+      <p className="text-xs font-semibold mb-3 text-slate-400">
         {latest ? "Latest earthquake" : "Largest earthquake in the last month"}
       </p>
       <p className=" text-2xl font-bold mb-3">

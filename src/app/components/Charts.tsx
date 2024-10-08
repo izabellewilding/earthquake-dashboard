@@ -51,6 +51,7 @@ const barOptions = {
   },
   plugins: {
     title: {
+      color: "white",
       display: true,
       text: "Number of earthquakes with magnitude > 6.0 by month (2023)",
     },
@@ -201,24 +202,27 @@ function ChartsComponent() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 bg-background">
+    <div className="grid grid-cols-1 lg:grid-cols-3 bg-slate-900">
       <div className=" col-span-2 flex flex-center flex-col md:m-6 ">
         <h1 className="text-2xl mb-7 p-5 text-text">
           USGS Earthquake Data Dashboard
         </h1>
         <div className="flex flex-col gap-6 items-center md:flex-row mb-4 md:pl-4">
-          <Card
-            className="bg-gradient-to-r from-purple-600 to-blue-500"
-            data={latestEarthquake.properties}
-            latest
-          />
-          <Card
-            className="bg-gradient-to-r from-purple-600 to-blue-500"
-            data={largestEarthquakeInLastMonth?.properties}
-          />
+          <h1>Statistics</h1>
+          <div className="flex flex-row">
+            <Card
+              className="bg-gradient-to-r"
+              data={latestEarthquake.properties}
+              latest
+            />
+            <Card
+              className="bg-gradient-to-r"
+              data={largestEarthquakeInLastMonth?.properties}
+            />
+          </div>
         </div>
         <div className="flex flex-col mt-4">
-          <div className="pb-4 h-80 md:h-96">
+          <div className="pb-4 h-80 md:h-96 bg-slate-800 rounded-md p-5 shadow-2xl">
             <BarChart data={barChartData} options={barOptions} />
           </div>
           <div
