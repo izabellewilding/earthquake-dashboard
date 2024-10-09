@@ -45,9 +45,15 @@ const barOptions = {
   scales: {
     x: {
       beginAtZero: true,
+      ticks: {
+        color: "#f4c7d7", // X-axis label color
+      },
     },
     y: {
       beginAtZero: true,
+      ticks: {
+        color: "#f4c7d", // X-axis label color
+      },
     },
   },
   plugins: {
@@ -95,7 +101,7 @@ const chartColors = [
   "#6bacd8",
   "#e0a069",
   "#c56cf0",
-  "#fd79a8",
+  "#f494b5",
 ];
 
 function ChartsComponent() {
