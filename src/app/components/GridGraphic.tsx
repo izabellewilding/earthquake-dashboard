@@ -6,7 +6,7 @@ export const GridGraphic = (props: any) => (
     width={982}
     height={786}
     fill="none"
-    className="absolute top-0"
+    className="absolute top-0 -Z-10"
     {...props}
   >
     <path

@@ -90,12 +90,10 @@ async function queryEarthquakeAPI(query: string) {
 const chartColors = [
   "#3498db",
   "#2ecc71",
-  "#9b59b6",
-  "#1abc9c",
-  "#2980b9",
-  "#e74c3c",
-  "#d35400",
-  "#e67e22",
+  "#bf99cf",
+  "#58eacd",
+  "#6bacd8",
+  "#e0a069",
   "#c56cf0",
   "#fd79a8",
 ];
@@ -184,6 +182,7 @@ function ChartsComponent() {
         data: earthquakesByMonthMagnitude.data.map((item: any) => item.value),
         backgroundColor: chartColors,
         hoverBackgroundColor: chartColors.map((color) => `${color}80`), // Add alpha for hover effect
+        barThickness: 30, // Set the bar width to 30 pixels
       },
     ],
   };
@@ -203,40 +202,42 @@ function ChartsComponent() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 bg-slate-900">
-      <div className="relative col-span-2 flex flex-center flex-col md:m-6 ">
-        <GridGraphic />
-        <h1 className="text-2xl mb-3 text-white">
-          USGS Earthquake Data Dashboard
+    <div className="grid grid-cols-1 lg:grid-cols-5">
+      <div className="relative col-span-4 flex flex-center flex-col md:m-6 max-h-screen ">
+        <h1 className="text-2xl mb-3 text-white font-bold">
+          USGS <span className="text-[#a0bfa3]">Earthquake Data Dashboard</span>
         </h1>
-        <h1 className="text-md mb-12 text-slate-300">
+        <h1 className="text-md mb-12 text-slate-300 ">
           This is a data dashboard displaying live global earthquake data using
           the USGS API.
         </h1>
-        <div className="grid gap-1">
+        <div className="flex flex-row">
           <Card
-            className="bg-gradient-to-r"
+            className="bg-gradient-to-r text-[#6bacd8]"
             data={latestEarthquake.properties}
-            latest
+            title="Latest Earthquake"
           />
           <Card
-            className="bg-gradient-to-r"
+            className="bg-gradient-to-r text-[#bf99cf]"
             data={largestEarthquakeInLastMonth?.properties}
+            title="Biggest in the last month"
           />
         </div>
-        <div className="flex flex-col mt-4">
-          <div className="pb-4 h-80 md:h-96 bg-slate-800 rounded-md p-5 shadow-2xl">
+        <div className="grid grid-cols-2 mt-4 h-full">
+          <div className="pb-4 p-5  ">
             <BarChart data={barChartData} options={barOptions} />
           </div>
           <div
-            className="flex justify-evenly sm:ml-4  bg-slate-900 rounded-md mb-5 ml-0 "
+            className="flex justify-evenly sm:ml-4  mb-5 ml-0 "
             style={{ height: 425 }}
           >
             <DoughnutChart data={doughnutChartData} options={doughnutOptions} />
           </div>
         </div>
       </div>
-      <List data={last10Earthquakes} />
+      <div className="col-span-1">
+        <List data={last10Earthquakes} />
+      </div>
     </div>
   );
 }
