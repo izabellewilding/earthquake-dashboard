@@ -25,7 +25,8 @@ import { getDateOneMonthAgo } from "../utils/getDateOneMonthAgo";
 import { groupBy } from "../utils/groupBy";
 import ClipLoader from "react-spinners/ClipLoader";
 import { GridGraphic } from "./GridGraphic";
-
+import { getEarthquakeData } from "../queries/getEarthquakeData";
+import { earthquakesInLastMonthQuery } from "../queries/getEarthquakesByMonth";
 //chart configuration
 
 ChartJS.register(
@@ -105,9 +106,6 @@ const chartColors = [
 ];
 
 function ChartsComponent() {
-  const currentDate = getCurrentDateTime();
-  const dateOneMonthAgo = getDateOneMonthAgo();
-
   const monthMagnitudeQuery =
     "?format=geojson&starttime=2023-01-01&endtime=2023-12-31&minmagnitude=6.0";
 
@@ -130,37 +128,32 @@ function ChartsComponent() {
     },
   });
 
-  const earthquakesInLastMonthQuery = `?format=geojson&starttime=${dateOneMonthAgo}&endtime=${currentDate}`;
-
-  const allEarthquakesInLastMonth = useQuery({
-    queryKey: ["allEarthquakesInLastMonth", earthquakesInLastMonthQuery],
+  const getEarthquakesByMonth = useQuery({
+    queryKey: ["earthquakesByMonth", earthquakesInLastMonthQuery],
     queryFn: async () => {
-      const data = await queryEarthquakeAPI(earthquakesInLastMonthQuery);
+      const data = await getEarthquakeData(earthquakesInLastMonthQuery);
       return data;
     },
   });
 
   const largestEarthquakeInLastMonth =
-    allEarthquakesInLastMonth?.data?.features.reduce(
+    getEarthquakesByMonth?.data?.features.reduce(
       (a: Earthquake, b: Earthquake) =>
         a.properties.mag > b.properties.mag ? a : b
     );
 
-  const latestEarthquake = allEarthquakesInLastMonth?.data?.features[0];
+  const latestEarthquake = getEarthquakesByMonth?.data?.features[0];
 
-  const last10Earthquakes = allEarthquakesInLastMonth?.data?.features.slice(
-    0,
-    10
-  );
+  const last10Earthquakes = getEarthquakesByMonth?.data?.features.slice(0, 10);
 
   const isLoading =
     earthquakesByMonthMagnitude.isLoading ||
-    allEarthquakesInLastMonth.isLoading ||
+    getEarthquakesByMonth.isLoading ||
     earthquakesPerCountry.isLoading;
 
   const error =
     earthquakesByMonthMagnitude.error ||
-    allEarthquakesInLastMonth.error ||
+    getEarthquakesByMonth.error ||
     earthquakesPerCountry.error;
 
   if (isLoading) {
